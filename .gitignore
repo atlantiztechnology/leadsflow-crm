@@ -45,7 +45,8 @@ Thumbs.db
 *.sublime-project
 
 # Data and storage
-data/
+/data/
+!dashboard/src/data/
 media/
 !src/**/media/
 uploads/

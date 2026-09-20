@@ -17,7 +17,8 @@ coverage/
 
 # Data files — runtime state (sessions, media, databases, API keys), never
 # part of the build context
-data/
+/data/
+!dashboard/src/data/
 *.db
 *.sqlite
 *.sqlite3
