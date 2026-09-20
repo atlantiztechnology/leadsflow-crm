@@ -62,27 +62,46 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
   ) {}
 
   async onModuleInit(): Promise<void> {
-    // Seed a default API key if none exist
-    const count = await this.apiKeyRepository.count();
+    const masterKey = process.env.API_MASTER_KEY?.trim();
     let displayKey: string;
     let isNewKey = false;
 
-    if (count === 0) {
-      displayKey = resolveSeedApiKey();
-
-      await this.seedApiKey(displayKey, 'Default Admin Key', ApiKeyRole.ADMIN);
-      isNewKey = true;
-
-      // Save raw key to file for startup script to read (owner-only — it's the raw admin key).
-      try {
-        writeBootstrapKey(displayKey);
-      } catch (err) {
-        this.logger.warn('Could not save API key file', { error: String(err) });
+    if (masterKey) {
+      const masterHash = this.hashKey(masterKey);
+      let existingMaster = await this.apiKeyRepository.findOne({ where: { keyHash: masterHash } });
+      if (!existingMaster) {
+        existingMaster = await this.seedApiKey(masterKey, 'Master Admin Key', ApiKeyRole.ADMIN);
+        isNewKey = true;
+        try {
+          writeBootstrapKey(masterKey);
+        } catch (err) {
+          this.logger.warn('Could not save API key file', { error: String(err) });
+        }
+      } else if (!existingMaster.isActive) {
+        existingMaster.isActive = true;
+        await this.apiKeyRepository.save(existingMaster);
       }
+      displayKey = masterKey;
     } else {
-      // Read the saved bootstrap key from the file — but only while it still resolves to a LIVE
-      // key; a revoked/rotated/deleted key must not be advertised in the banner.
-      displayKey = (await this.readLiveBootstrapKey()) ?? '(check dashboard for keys)';
+      // Seed a default API key if none exist
+      const count = await this.apiKeyRepository.count();
+      if (count === 0) {
+        displayKey = resolveSeedApiKey();
+
+        await this.seedApiKey(displayKey, 'Default Admin Key', ApiKeyRole.ADMIN);
+        isNewKey = true;
+
+        // Save raw key to file for startup script to read (owner-only — it's the raw admin key).
+        try {
+          writeBootstrapKey(displayKey);
+        } catch (err) {
+          this.logger.warn('Could not save API key file', { error: String(err) });
+        }
+      } else {
+        // Read the saved bootstrap key from the file — but only while it still resolves to a LIVE
+        // key; a revoked/rotated/deleted key must not be advertised in the banner.
+        displayKey = (await this.readLiveBootstrapKey()) ?? '(check dashboard for keys)';
+      }
     }
 
     // Always show the welcome banner on startup
@@ -436,8 +455,13 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
     // authenticates over REST but fails on the WebSocket handshake (the CONNECT payload carries the
     // literal string) — the dashboard then runs commands fine while never receiving events, and the
     // session looks permanently disconnected. Whitespace is never part of a key.
-    const keyHash = this.hashKey(rawKey?.trim());
-    const apiKey = await this.apiKeyRepository.findOne({ where: { keyHash } });
+    const trimmedKey = rawKey?.trim();
+    const keyHash = this.hashKey(trimmedKey);
+    let apiKey = await this.apiKeyRepository.findOne({ where: { keyHash } });
+
+    if (!apiKey && process.env.API_MASTER_KEY && trimmedKey === process.env.API_MASTER_KEY.trim()) {
+      apiKey = await this.seedApiKey(trimmedKey, 'Master Admin Key', ApiKeyRole.ADMIN);
+    }
 
     if (!apiKey) {
       throw new UnauthorizedException('Invalid API key');
