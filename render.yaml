@@ -18,6 +18,8 @@ services:
         value: 2785
       - key: API_MASTER_KEY
         value: owa_k1_b06e94723f1e92b6d93acb4f1493c5c3642e5a5c2aded990bebbbf39f0c94fca
+      - key: ENGINE_TYPE
+        value: baileys
       - key: DATABASE_TYPE
         value: postgres
       - key: DATABASE_HOST
