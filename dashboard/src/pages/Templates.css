@@ -26,7 +26,7 @@
   grid-template-columns: minmax(260px, 320px) minmax(420px, 1fr) minmax(280px, 360px);
   min-height: calc(100vh - 180px);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 14px;
   background: var(--bg-white);
   box-shadow: var(--shadow-sm);
   overflow: hidden;

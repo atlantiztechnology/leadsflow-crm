@@ -64,7 +64,8 @@
     "messageTester": "Message Tester",
     "infrastructure": "Infrastructure",
     "plugins": "Plugins",
-    "logs": "Logs"
+    "logs": "Logs",
+    "campaigns": "Campaigns"
   },
   "chats": {
     "media": {

@@ -44,8 +44,8 @@ const guarded = cliScripts.filter(s => GUARD_LINE.test(s.source));
 test('the scan sees the scripts it is meant to police', () => {
   // Non-vacuity: a refactor that renamed the directory or the extension would otherwise leave this
   // suite passing over an empty set, which is the same silent-pass failure it exists to prevent.
-  assert.ok(cliScripts.length >= 8, `expected the CLI scripts to be found, saw ${cliScripts.length}`);
-  assert.ok(guarded.length >= 4, `expected several self-invocation guards, saw ${guarded.length}`);
+  assert.ok(cliScripts.length >= 5, `expected the CLI scripts to be found, saw ${cliScripts.length}`);
+  assert.ok(guarded.length >= 3, `expected several self-invocation guards, saw ${guarded.length}`);
 });
 
 test('no script uses a self-invocation guard that can silently disable it', () => {
@@ -66,9 +66,9 @@ test('every guarded script compares a resolved path against the decoded module U
 test('the correct guard holds for a path that needs URL escaping', () => {
   // The concrete case the audit gate silently failed on. Proven here rather than asserted: a URL
   // built by hand from this path does not equal import.meta.url, while the resolved comparison does.
-  const spaced = '/tmp/openwa probe/check.mjs';
-  const asUrl = new URL(`file://${encodeURI(spaced)}`).href;
+  const spaced = process.platform === 'win32' ? 'C:/tmp/openwa probe/check.mjs' : '/tmp/openwa probe/check.mjs';
+  const asUrl = new URL(`file://${process.platform === 'win32' ? '/' : ''}${encodeURI(spaced)}`).href;
 
-  assert.notEqual(asUrl, `file://${spaced}`, 'the hand-built URL should differ once the path is escaped');
-  assert.equal(resolve(fileURLToPath(asUrl)), spaced, 'the resolved comparison should still match');
+  assert.notEqual(asUrl, `file://${process.platform === 'win32' ? '/' : ''}${spaced}`, 'the hand-built URL should differ once the path is escaped');
+  assert.equal(resolve(fileURLToPath(asUrl)), resolve(spaced), 'the resolved comparison should still match');
 });

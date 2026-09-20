@@ -64,7 +64,8 @@
     "messageTester": "اختبار الرسائل",
     "infrastructure": "البنية التحتية",
     "plugins": "الإضافات",
-    "logs": "السجلات"
+    "logs": "السجلات",
+    "campaigns": "Campaigns"
   },
   "chats": {
     "media": {

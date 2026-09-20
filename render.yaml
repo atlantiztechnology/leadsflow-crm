@@ -1,0 +1,38 @@
+﻿services:
+  - type: web
+    name: openwa-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    region: singapore
+    numInstances: 1
+    disk:
+      name: openwa-data
+      mountPath: /app/data
+      sizeGB: 1
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 2785
+      - key: DATABASE_TYPE
+        value: postgres
+      - key: DATABASE_HOST
+        value: dpg-danl3hqjnfac73909vd0-a
+      - key: DATABASE_PORT
+        value: "5432"
+      - key: DATABASE_NAME
+        value: main_db_wstl
+      - key: DATABASE_USERNAME
+        value: main_db_wstl_user
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: DATABASE_SSL
+        value: "true"
+      - key: DATABASE_SSL_REJECT_UNAUTHORIZED
+        value: "false"
+      - key: DATABASE_SYNCHRONIZE
+        value: "false"
+      - key: SERVE_DASHBOARD
+        value: "true"

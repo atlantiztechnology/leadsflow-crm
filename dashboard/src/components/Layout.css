@@ -1,12 +1,13 @@
 .layout {
   display: flex;
   min-height: 100vh;
+  background: var(--bg-light);
 }
 
 /* ==================== Sidebar ==================== */
 .sidebar {
   width: 260px;
-  background: var(--bg-white);
+  background: var(--bg-sidebar, var(--bg-white));
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -14,8 +15,8 @@
   height: 100vh;
   z-index: 100;
   transition:
-    width 0.3s ease,
-    transform 0.3s ease;
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar.collapsed {
@@ -26,26 +27,51 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1.5rem;
+  padding: 1.25rem 1.25rem;
   border-bottom: 1px solid var(--border);
-  min-height: 72px;
+  min-height: 68px;
+  box-sizing: border-box;
 }
 
 .sidebar.collapsed .sidebar-header {
   justify-content: center;
-  padding: 1.5rem 1rem;
+  padding: 1.25rem 0.5rem;
+}
+
+.sidebar-logo-full {
+  height: 40px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  display: block;
+}
+
+.sidebar-logo-collapsed {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  object-position: left center;
+  border-radius: 8px;
+  display: block;
 }
 
 .sidebar-logo {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
+.mobile-brand .sidebar-logo-full {
+  height: 28px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+}
+
 .mobile-brand .sidebar-logo {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
 .sidebar-brand {
@@ -57,37 +83,36 @@
 
 .brand-name {
   font-size: 1.125rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .brand-version {
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--text-muted);
-  opacity: 0.7;
   margin-top: 1px;
 }
 
 /* Collapse Toggle Button - Circular design at edge */
 .collapse-toggle {
   position: absolute;
-  right: -14px;
-  top: 36px;
-  width: 28px;
-  height: 28px;
+  right: -12px;
+  top: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: var(--bg-white);
   border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--text-secondary);
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   z-index: 101;
   padding: 0;
 }
@@ -95,17 +120,17 @@
 .collapse-toggle:hover {
   background: var(--primary);
   border-color: var(--primary);
-  color: white;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 157, 131, 0.3);
 }
 
 .collapse-toggle svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 .sidebar.collapsed .collapse-toggle {
-  right: -14px;
+  right: -12px;
 }
 
 .sidebar-nav {
@@ -125,24 +150,25 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.7rem 1rem;
+  padding: 0.65rem 0.85rem;
   color: var(--text-secondary);
   text-decoration: none;
   border-radius: var(--radius);
   font-size: 0.875rem;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
+  position: relative;
 }
 
 .sidebar.collapsed .nav-item {
   justify-content: center;
-  padding: 0.7rem;
+  padding: 0.65rem;
 }
 
 .nav-item:hover {
-  background: var(--bg-light);
+  background: var(--bg-secondary);
   color: var(--text-primary);
   text-decoration: none;
 }
@@ -150,18 +176,20 @@
 .nav-item.active {
   background: var(--primary-soft);
   color: var(--primary-text);
+  font-weight: 600;
 }
 
 .nav-item.active svg {
-  color: var(--primary-text);
+  color: var(--primary);
 }
 
 .sidebar-footer {
-  padding: 0.75rem;
+  padding: 0.85rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   border-top: 1px solid var(--border);
+  background: var(--bg-sidebar, var(--bg-white));
 }
 
 .sidebar.collapsed .sidebar-footer {
@@ -172,28 +200,24 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 0.9rem;
+  padding: 0.6rem 0.85rem;
   color: var(--text-secondary);
-  background: none;
+  background: var(--bg-white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
+  width: 100%;
 }
 
 .appearance-button-cue {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  /* Plain icon, no brand orb — the green swatch belonged to the removed palette picker. */
   color: inherit;
 }
 
@@ -201,20 +225,18 @@
 .sidebar.collapsed .logout-btn {
   justify-content: center;
   padding: 0.6rem;
+  width: 100%;
 }
 
 .theme-toggle-btn:hover {
-  background: var(--bg-light);
+  background: var(--bg-secondary);
   color: var(--text-primary);
+  border-color: var(--border);
 }
 
 .language-menu,
 .appearance-menu {
   position: relative;
-}
-
-.language-menu .theme-toggle-btn,
-.appearance-menu .theme-toggle-btn {
   width: 100%;
 }
 
@@ -231,7 +253,7 @@
   background: var(--bg-white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.16);
+  box-shadow: var(--shadow-lg);
   z-index: 120;
 }
 
@@ -239,21 +261,21 @@
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 34px;
-  padding: 0.45rem 0.6rem;
+  min-height: 32px;
+  padding: 0.4rem 0.6rem;
   color: var(--text-secondary);
   background: transparent;
   border: 0;
   border-radius: calc(var(--radius) - 2px);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
 }
 
 .language-menu-item:hover {
-  background: var(--bg-light);
+  background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
@@ -272,22 +294,23 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 0.9rem;
+  padding: 0.6rem 0.85rem;
   color: var(--text-secondary);
-  background: none;
+  background: var(--bg-white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease;
   white-space: nowrap;
   overflow: hidden;
+  width: 100%;
 }
 
 .logout-btn:hover {
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(224, 90, 103, 0.1);
+  border-color: rgba(224, 90, 103, 0.3);
   color: var(--error-text);
 }
 
@@ -300,8 +323,8 @@
   min-height: 100vh;
   overflow-x: hidden;
   transition:
-    margin-left 0.3s ease,
-    width 0.3s ease;
+    margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .main-content.expanded {
@@ -354,10 +377,6 @@
     stroke: var(--text-primary);
   }
 
-  .mobile-menu-btn:hover {
-    background: var(--bg-light) !important;
-  }
-
   .mobile-brand {
     display: flex;
     align-items: center;
@@ -371,7 +390,7 @@
   .sidebar.mobile {
     transform: translateX(-100%);
     width: 280px;
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
   }
 
   .sidebar.mobile.open {
@@ -418,7 +437,7 @@
 
 [dir='rtl'] .collapse-toggle {
   right: auto;
-  left: -14px;
+  left: -12px;
 }
 
 [dir='rtl'] .collapse-toggle svg {
@@ -438,8 +457,8 @@
   margin-left: 0;
   margin-right: 260px;
   transition:
-    margin-right 0.3s ease,
-    width 0.3s ease;
+    margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [dir='rtl'] .main-content.expanded {
@@ -452,3 +471,4 @@
     margin-right: 0;
   }
 }
+

@@ -64,7 +64,8 @@
     "messageTester": "Mesaj Test Aracı",
     "infrastructure": "Altyapı",
     "plugins": "Eklentiler",
-    "logs": "Kayıtlar (Logs)"
+    "logs": "Kayıtlar (Logs)",
+    "campaigns": "Campaigns"
   },
   "chats": {
     "media": {

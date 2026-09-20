@@ -21,6 +21,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Languages,
+  Megaphone,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { type UserRole } from '../hooks/useRole';
@@ -39,6 +40,7 @@ const allNavItems = [
   { to: '/chats', icon: MessageSquare, key: 'chats' as const, adminOnly: false },
   { to: '/webhooks', icon: Webhook, key: 'webhooks' as const, adminOnly: false },
   { to: '/templates', icon: ClipboardList, key: 'templates' as const, adminOnly: false },
+  { to: '/campaigns', icon: Megaphone, key: 'campaigns' as const, adminOnly: false },
   { to: '/api-keys', icon: Key, key: 'apiKeys' as const, adminOnly: true },
   { to: '/message-tester', icon: Send, key: 'messageTester' as const, adminOnly: false },
   // Backend /infra/* is ADMIN-only; hide the nav item from non-admins (UX + defense-in-depth).
@@ -133,6 +135,7 @@ export function Layout({ onLogout, userRole }: LayoutProps) {
     void i18n.changeLanguage(language);
   };
   const isRtl = rtlLanguages.includes(currentLang);
+  const logoSrc = resolvedTheme === 'dark' ? '/logo_dark.webp' : '/logo_light.webp';
 
   return (
     <div className="layout">
@@ -142,8 +145,12 @@ export function Layout({ onLogout, userRole }: LayoutProps) {
             {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div className="mobile-brand">
-            <img src="/openwa_logo.webp" alt="OpenWA" className="sidebar-logo" />
-            <span className="brand-name">{t('common.appName')}</span>
+            <img
+              src={logoSrc}
+              alt={t('common.appName')}
+              title={`${t('common.appName')} v${version}`}
+              className="sidebar-logo-full"
+            />
           </div>
           <div style={{ width: 40 }} />
         </header>
@@ -155,13 +162,12 @@ export function Layout({ onLogout, userRole }: LayoutProps) {
         className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobile ? 'mobile' : ''} ${isMobileOpen ? 'open' : ''}`}
       >
         <div className="sidebar-header">
-          <img src="/openwa_logo.webp" alt="OpenWA" className="sidebar-logo" />
-          {!isCollapsed && (
-            <div className="sidebar-brand">
-              <span className="brand-name">{t('common.appName')}</span>
-              <span className="brand-version">v{version}</span>
-            </div>
-          )}
+          <img
+            src={logoSrc}
+            alt={t('common.appName')}
+            title={`${t('common.appName')} v${version}`}
+            className={isCollapsed ? 'sidebar-logo-collapsed' : 'sidebar-logo-full'}
+          />
         </div>
 
         {!isMobile && (

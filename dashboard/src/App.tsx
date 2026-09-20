@@ -23,6 +23,8 @@ const ApiKeys = lazy(() => import('./pages/ApiKeys').then(m => ({ default: m.Api
 const MessageTester = lazy(() => import('./pages/MessageTester').then(m => ({ default: m.MessageTester })));
 const Infrastructure = lazy(() => import('./pages/Infrastructure').then(m => ({ default: m.Infrastructure })));
 const Plugins = lazy(() => import('./pages/Plugins'));
+const CampaignsListPage = lazy(() => import('./pages/CampaignsListPage').then(m => ({ default: m.CampaignsListPage })));
+const NewCampaignPage = lazy(() => import('./pages/NewCampaignPage').then(m => ({ default: m.NewCampaignPage })));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -114,6 +116,9 @@ function AppContent() {
               <Route path="chats" element={<Chats />} />
               <Route path="webhooks" element={<Webhooks />} />
               <Route path="templates" element={<Templates />} />
+              <Route path="campaigns" element={<CampaignsListPage />} />
+              <Route path="campaigns/new" element={<NewCampaignPage />} />
+              <Route path="campaigns/:id" element={<NewCampaignPage />} />
               {role === 'admin' && <Route path="api-keys" element={<ApiKeys />} />}
               {role === 'admin' && <Route path="logs" element={<Logs />} />}
               <Route path="message-tester" element={<MessageTester />} />

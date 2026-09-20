@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: 'Plus Jakarta Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
@@ -87,7 +91,7 @@ button {
 button:focus-visible,
 a:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--primary, #25d366);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 button:focus:not(:focus-visible) {
@@ -101,11 +105,9 @@ html {
 }
 
 @media (prefers-color-scheme: light) {
-  /* Guarded with :not([data-theme='dark']): when the OS prefers light but the user explicitly
-     picked the dark theme, the app's own choice must win (otherwise the root is force-whitened). */
   :root:not([data-theme='dark']) {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--text-primary);
+    background-color: var(--bg-light);
   }
 }
 
@@ -131,13 +133,13 @@ select {
 }
 
 select:hover {
-  border-color: var(--primary, #25d366);
+  border-color: var(--primary);
 }
 
 select:focus {
   outline: none;
-  border-color: var(--primary, #25d366);
-  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 157, 131, 0.15);
 }
 
 select:disabled {
@@ -251,9 +253,9 @@ select:disabled {
 
 .modal-body input:focus {
   outline: none;
-  border-color: var(--primary, #25d366);
+  border-color: var(--primary);
   background: var(--bg-white, #fff);
-  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+  box-shadow: 0 0 0 3px rgba(15, 157, 131, 0.15);
 }
 
 /* The rule above is meant for TEXT inputs. Radios/checkboxes would otherwise stretch to width:100%
@@ -340,26 +342,26 @@ select:disabled {
 }
 
 /* Primary Button — canonical definition; page-scoped copies were consolidated here so the
-   primary CTA looks identical on every page (padding/radius/disabled used to drift per page). */
+   primary CTA looks identical on every page. */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
-  background: var(--primary, #25d366);
-  /* Dark text on the WhatsApp green: 9.0:1 (AAA). White was 1.98:1, failing even the AA
-     large-text floor - the single worst contrast pair in the dashboard. */
-  color: #0f172a;
+  background: var(--primary);
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--primary-hover, #1da851);
+  background: var(--primary-hover);
+  box-shadow: 0 4px 6px -1px rgba(15, 157, 131, 0.2);
 }
 
 .btn-primary:disabled {

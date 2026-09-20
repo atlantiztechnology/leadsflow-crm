@@ -62,7 +62,7 @@
 .chats-page .session-selector:focus {
   border-color: var(--primary);
   background: var(--bg-white);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 0 0 3px rgba(15, 157, 131, 0.12);
 }
 
 /* Chats / Channels / Status segmented control */
@@ -176,7 +176,7 @@
 }
 
 .chats-page .chat-item-card.active {
-  background: rgba(34, 197, 94, 0.08);
+  background: rgba(15, 157, 131, 0.08);
 }
 
 .chats-page .chat-avatar {
@@ -203,7 +203,7 @@
 .chats-page .chat-item-card.active .chat-avatar {
   background: var(--bg-white);
   color: var(--primary-text);
-  border-color: rgba(34, 197, 94, 0.3);
+  border-color: rgba(15, 157, 131, 0.3);
 }
 
 .chats-page .chat-item-info {
@@ -271,7 +271,7 @@
   font-weight: 700;
   line-height: 1;
   border-radius: 999px;
-  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 2px 4px rgba(15, 157, 131, 0.3);
 }
 
 .chats-page .chat-kind-badge {
@@ -652,7 +652,7 @@
 .chats-page .message-text-input:focus {
   border-color: var(--primary);
   background: var(--bg-white);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 0 0 3px rgba(15, 157, 131, 0.12);
 }
 
 .chats-page .btn-send-message {
@@ -670,7 +670,7 @@
     background 0.2s,
     transform 0.1s;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 2px 8px rgba(15, 157, 131, 0.3);
 }
 
 .chats-page .btn-send-message:hover:not(:disabled) {
@@ -765,7 +765,7 @@
 }
 
 .chats-page .btn-input-accessory.active {
-  background: rgba(34, 197, 94, 0.1);
+  background: rgba(15, 157, 131, 0.1);
   color: var(--primary-text);
 }
 
@@ -1490,7 +1490,7 @@
 .chats-page .status-compose-modal select:focus {
   border-color: var(--primary);
   background: var(--bg-white);
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 0 0 3px rgba(15, 157, 131, 0.12);
 }
 
 .chats-page .status-compose-modal textarea {

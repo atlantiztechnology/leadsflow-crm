@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, Languages } from 'lucide-react';
-import { GithubIcon } from '../components/GithubIcon';
 import { CustomSelect } from '../components/CustomSelect';
 import { languageOptions, resolveSupportedLanguage, type SupportedLanguage } from '../i18n';
+import { useTheme } from '../hooks/useTheme';
 import { API_BASE_URL } from '../services/api';
 import './Login.css';
 
@@ -13,11 +13,13 @@ interface LoginProps {
 
 export function Login({ onLogin }: LoginProps) {
   const { t, i18n } = useTranslation();
+  const { resolvedTheme } = useTheme();
   const [apiKey, setApiKey] = useState('');
   const [showKey, setShowKey] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const currentLang = resolveSupportedLanguage(i18n.resolvedLanguage || i18n.language);
+  const logoSrc = resolvedTheme === 'dark' ? '/logo_dark.webp' : '/logo_light.webp';
 
   const changeLanguage = (language: SupportedLanguage) => {
     void i18n.changeLanguage(language);
@@ -61,7 +63,7 @@ export function Login({ onLogin }: LoginProps) {
     <div className="login-container">
       <div className="login-card">
         <div className="login-logo">
-          <img src="/openwa_logo.webp" alt="OpenWA" className="logo-icon" />
+          <img src={logoSrc} alt={t('common.appName')} className="logo-icon" />
           <span className="version-info">
             {t('login.version', {
               version: __APP_VERSION__,
@@ -118,19 +120,6 @@ export function Login({ onLogin }: LoginProps) {
           </a>
         </p>
       </div>
-
-      <footer className="login-footer">
-        <span>{t('login.footer')}</span>
-        <a
-          href="https://github.com/rmyndharis/OpenWA"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="github-link"
-          aria-label="GitHub"
-        >
-          <GithubIcon size={18} />
-        </a>
-      </footer>
     </div>
   );
 }
